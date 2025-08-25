@@ -10,6 +10,7 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import Link from 'next/link';
 
 export default function Content() {
   return (
@@ -28,7 +29,7 @@ export default function Content() {
             <Grid item xs>
               <TextField
                 fullWidth
-                placeholder="Search by email address, phone number, or user UID"
+                placeholder="Busque pelo nome ou código do animal"
                 InputProps={{
                   disableUnderline: true,
                   sx: { fontSize: 'default' },
@@ -37,10 +38,12 @@ export default function Content() {
               />
             </Grid>
             <Grid item>
-              <Button variant="contained" sx={{ mr: 1 }}>
-                Add user
-              </Button>
-              <Tooltip title="Reload">
+              <Link href="/cadastrar">
+                <Button variant="contained" sx={{ mr: 1 }}>
+                  Adicionar Usuário
+                </Button>
+              </Link>
+              <Tooltip title="Buscar novamente">
                 <IconButton>
                   <RefreshIcon color="inherit" sx={{ display: 'block' }} />
                 </IconButton>
@@ -50,7 +53,7 @@ export default function Content() {
         </Toolbar>
       </AppBar>
       <Typography align="center" sx={{ color: 'text.secondary', my: 5, mx: 2 }}>
-        No users for this project yet
+        Nenhum animal encontrado.
       </Typography>
     </Paper>
   );

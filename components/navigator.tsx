@@ -14,7 +14,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 
-import SignpostIcon from '@mui/icons-material/Signpost';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import RunningWithErrorsIcon from '@mui/icons-material/RunningWithErrors';
 import DashboardIcon from '@mui/icons-material/Dashboard';

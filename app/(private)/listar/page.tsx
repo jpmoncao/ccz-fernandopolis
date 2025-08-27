@@ -1,4 +1,9 @@
+'use client'
+
 import * as React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -10,11 +15,53 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import Link from 'next/link';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+
+function createData(
+  id: number,
+  name: string,
+  type: string,
+  cadasterDate: string,
+  employee: string
+) {
+  return { id, name, type, cadasterDate, employee, edit: 'Editar' };
+}
+
+const columns: GridColDef[] = [
+  { field: 'id', headerName: 'Cód. Animal', width: 100, align: 'right' },
+  { field: 'name', headerName: 'Nome', width: 300 },
+  { field: 'type', headerName: 'Tipo', width: 225 },
+  { field: 'cadasterDate', headerName: 'Data de cadastro', width: 150 },
+  { field: 'employee', headerName: 'Cadastrado por', width: 150 },
+  { field: 'edit', headerName: '', width: 75 },
+];
+
+const rows = [
+  createData(1, 'Pipa', 'Cachorro', '06/08/2017', 'Daniele'),
+  createData(2, 'Deco', 'Cachorro', '06/01/2014', 'Daniele'),
+  createData(3, 'Moisés', 'Cachorro', '23/04/2018', 'Daniele'),
+  createData(4, 'Abraão', 'Cachorro', '18/05/2022', 'Daniele'),
+];
+
+function NoRowsOverlay() {
+  return (
+    <Typography align="center" sx={{ color: 'text.secondary', my: 5, mx: 2 }}>
+      Nenhum animal encontrado.
+    </Typography>
+  );
+}
 
 export default function Content() {
+  const router = useRouter(); // Hook para navegação
+
+  // Função que será chamada ao clicar na linha
+  const handleRowClick = (params: any) => {
+    const animalId = params.row.id; // Pega o ID do animal clicado
+    router.push(`/listar/${animalId}`); // Redireciona para a página de detalhes
+  };
+  
   return (
-    <Paper sx={{ maxWidth: 936, margin: 'auto', overflow: 'hidden' }}>
+    <Paper sx={{ maxWidth: 1000, margin: 'auto', overflow: 'hidden' }}>
       <AppBar
         position="static"
         color="default"
@@ -40,7 +87,7 @@ export default function Content() {
             <Grid item>
               <Link href="/cadastrar">
                 <Button variant="contained" sx={{ mr: 1 }}>
-                  Adicionar Usuário
+                  Adicionar Animal
                 </Button>
               </Link>
               <Tooltip title="Buscar novamente">
@@ -52,9 +99,15 @@ export default function Content() {
           </Grid>
         </Toolbar>
       </AppBar>
-      <Typography align="center" sx={{ color: 'text.secondary', my: 5, mx: 2 }}>
-        Nenhum animal encontrado.
-      </Typography>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pagination
+        pageSizeOptions={[5, 10]}
+        sx={{ border: 0 }}
+        slots={{ noRowsOverlay: NoRowsOverlay }}
+        onRowClick={handleRowClick} 
+      />
     </Paper>
   );
 }

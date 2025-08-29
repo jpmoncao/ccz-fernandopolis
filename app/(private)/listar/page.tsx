@@ -24,16 +24,15 @@ function createData(
   cadasterDate: string,
   employee: string
 ) {
-  return { id, name, type, cadasterDate, employee, edit: 'Editar' };
+  return { id, name, type, cadasterDate, employee};
 }
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'Cód. Animal', width: 100, align: 'right' },
-  { field: 'name', headerName: 'Nome', width: 300 },
-  { field: 'type', headerName: 'Tipo', width: 225 },
+  { field: 'name', headerName: 'Nome', width: 350 },
+  { field: 'type', headerName: 'Tipo', width: 250 },
   { field: 'cadasterDate', headerName: 'Data de cadastro', width: 150 },
-  { field: 'employee', headerName: 'Cadastrado por', width: 150 },
-  { field: 'edit', headerName: '', width: 75 },
+  { field: 'employee', headerName: 'Cadastrado por', width: 150 }
 ];
 
 const rows = [
@@ -52,12 +51,11 @@ function NoRowsOverlay() {
 }
 
 export default function Content() {
-  const router = useRouter(); // Hook para navegação
+  const router = useRouter();
 
-  // Função que será chamada ao clicar na linha
   const handleRowClick = (params: any) => {
-    const animalId = params.row.id; // Pega o ID do animal clicado
-    router.push(`/listar/${animalId}`); // Redireciona para a página de detalhes
+    const animalId = params.row.id;
+    router.push(`/listar/${animalId}`);
   };
   
   return (
